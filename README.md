@@ -1,24 +1,26 @@
 # Spyanator
 
-**TODO: Add description**
+A spy library for Elixir.
+
+You provide the mocks, we provide the spys.
+We also provide ExUnit helpers for our spys.
+
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+[Available in Hex](https://hex.pm/docs/publish). The package can be installed as:
 
   1. Add `spyanator` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
-      [{:spyanator, "~> 0.1.0"}]
+      [{:spyanator, "~> 0.0.1"}]
     end
     ```
 
-  2. Ensure `spyanator` is started before your application:
+  2. Ensure `spyanator` is started before your tests:
 
     ```elixir
-    def application do
-      [applications: [:spyanator]]
-    end
+      Spyanator.start_link()
+      ExUnit.start()
     ```
-
