@@ -8,7 +8,7 @@ We also provide ExUnit helpers for our spys.
 
 ## Installation
 
-[Available in Hex](https://hex.pm/docs/publish). The package can be installed as:
+[Available in Hex](https://hex.pm/packages/spyanator). The package can be installed as:
 
   1. Add `spyanator` to your list of dependencies in `mix.exs`:
 
