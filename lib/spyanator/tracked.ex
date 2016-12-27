@@ -5,9 +5,9 @@ defmodule Spyanator.Tracked do
     * Calls
         * incremented when a function is called
     * Arguments
-        * A tuple that tracks the arguments given to a tracked function
+        * A tuple that tracks the arguments given to a  function
     * Returned Values
-        * A tuple that tracks the return value from a tracked function
+        * A tuple that tracks the return value from a  function
   """
   defstruct calls: 0, arguments: {}, return_values: {}
 end

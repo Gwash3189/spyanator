@@ -29,7 +29,7 @@ defmodule Spyanator.Assertions do
     defmodule AgentSpy do
       use Spyanator
 
-      track start(_fn, _opts), do: {:ok, nil}
+      def start(_fn, _opts), do: {:ok, nil}
     end
 
     def func, do: fn() -> %{} end

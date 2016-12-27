@@ -6,7 +6,7 @@ defmodule Spyanator do
     This module is used with `Spyanator.Macro` to track calls, return values and
     arguments sent to spys.
 
-    To create a spy, you must `use Spyanator` and the `track` macro
+    To create a spy, you must `use Spyanator` and define functions like normal
 
     ```
     defmodule TestTheThing do
@@ -15,7 +15,7 @@ defmodule Spyanator do
       defmodule AgentSpy do
         use Spyanator
 
-        track start(_fn, opts), do: {:ok, nil}
+        def start(_fn, opts), do: {:ok, nil}
       end
 
       def start_spy(_context), do:
@@ -52,6 +52,7 @@ defmodule Spyanator do
 
   defmacro __using__(_) do
     quote do
+      import Kernel, except: [def: 2]
       import Spyanator.Macros
     end
   end
@@ -112,7 +113,7 @@ defmodule Spyanator do
   end
 
   @doc """
-    Tracks the arguments provided to the tracked function.
+    Tracks the arguments provided to the  function.
   """
   @spec track_arguments_to(module, atom, [any]) :: :ok
   def track_arguments_to(module, func_name, args_list) do

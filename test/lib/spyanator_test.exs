@@ -4,12 +4,13 @@ defmodule Spyanator.Test do
   defmodule Spy do
     use Spyanator
 
-    track track_me(x), do: x
-    def track_me(x, y), do: x + y
+    def def_me(x), do: x
+    def def_me(x, y), do: x + y
   end
 
   def state_for(spy), do: :sys.get_state(spy)
-  def subject(_ \\ nil), do: Spy.track_me(1)
+  def ok(_x), do: :ok
+  def subject(_ \\ nil), do: Spy.def_me(1) |> ok
   def start_spy(_context), do:
     {:ok, spy: Spyanator.start_spy(Spy)}
 
@@ -39,23 +40,23 @@ defmodule Spyanator.Test do
     end
   end
 
-  describe "when a tracked function is called" do
+  describe "when a defed function is called" do
     setup [:start_spy, :subject]
 
-    test "it tracks how many times the function is called", %{spy: {:ok, spy}} do
-      assert state_for(spy) |> Map.get(:track_me) |> Map.get(:calls) == 1
+    test "it defs how many times the function is called", %{spy: {:ok, spy}} do
+      assert state_for(spy) |> Map.get(:def_me) |> Map.get(:calls) == 1
 
       subject
 
-      assert state_for(spy) |> Map.get(:track_me) |> Map.get(:calls) == 2
+      assert state_for(spy) |> Map.get(:def_me) |> Map.get(:calls) == 2
     end
 
-    test "it tracks the provided arguments", %{spy: {:ok, spy}} do
-      assert state_for(spy) |> Map.get(:track_me) |> Map.get(:arguments) == {[1]}
+    test "it defs the provided arguments", %{spy: {:ok, spy}} do
+      assert state_for(spy) |> Map.get(:def_me) |> Map.get(:arguments) == {[1]}
     end
 
-    test "it tracks the return value", %{spy: {:ok, spy}} do
-      assert state_for(spy) |> Map.get(:track_me) |> Map.get(:return_values) == {[1]}
+    test "it defs the return value", %{spy: {:ok, spy}} do
+      assert state_for(spy) |> Map.get(:def_me) |> Map.get(:return_values) == {[1]}
     end
   end
 end

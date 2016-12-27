@@ -1,18 +1,18 @@
 defmodule Spyanator.Assertions.Calls.Chains do
   @moduledoc """
-    functional chains that can be used to inspect how many times a tracked
+    functional chains that can be used to inspect how many times a 
     function was called
   """
   alias Spyanator.Assertions.Calls
 
   @doc """
-    Used to make an assertion on the arguments that a tracked function received
+    Used to make an assertion on the arguments that a  function received
   """
   @spec with_arguments(false) :: false
   def with_arguments(false), do: false
 
   @doc """
-    Used to make an assertion on the arguments that a tracked function received
+    Used to make an assertion on the arguments that a  function received
   """
   @spec with_arguments(%Calls{}, [any]) :: false | %Calls{}
   def with_arguments(%Calls{call_count: count, module: module, func_name: func_name} = calls, expected_arguments) do
@@ -32,7 +32,7 @@ defmodule Spyanator.Assertions.Calls.Chains do
   end
 
   @doc """
-    Used to start a functional chain that inspects the calls to a tracked
+    Used to start a functional chain that inspects the calls to a 
     function
   """
   @spec received(module, atom) :: boolean | %Calls{call_count: pos_integer}

@@ -4,13 +4,13 @@ defmodule Spyanator.Assertions.Calls.Test do
 
   defmodule Spy do
     use Spyanator
-    track test(x, y) when is_float(x) and is_float(y) do
+    def test(x, y) when is_float(x) and is_float(y) do
       x + y
     end
-    track test(x, y), do: x + y
+    def test(x, y), do: x + y
   end
 
-  describe "when tracking the number of times a function was called" do
+  describe "when defing the number of times a function was called" do
     setup [:subject]
 
     test "it can be used with once/1" do
@@ -34,7 +34,7 @@ defmodule Spyanator.Assertions.Calls.Test do
     end
   end
 
-  describe "when tracking the arguments passed to a function" do
+  describe "when defing the arguments passed to a function" do
     setup [:subject]
 
     test "it can be used with with_arguments/2" do
@@ -49,10 +49,10 @@ defmodule Spyanator.Assertions.Calls.Test do
     end
   end
 
-  describe "when there is a complex function to track" do
+  describe "when there is a complex function to def" do
     setup [:complex_subject]
 
-    test "it still tracks the function" do
+    test "it still defs the function" do
       assert Spy |> received(:test) |> with_arguments([1.0, 2.0])
     end
   end

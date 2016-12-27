@@ -4,12 +4,12 @@ defmodule Spyanator.Assertions.Returns.Test do
 
   defmodule Spy do
     use Spyanator
-    track test(x, y), do: x + y
-    track array(x), do: x
-    track tuple(x), do: x
-    track string(x), do: x
-    track boolean(x), do: x
-    track binary(x), do: x
+    def test(x, y), do: x + y
+    def array(x), do: x
+    def tuple(x), do: x
+    def string(x), do: x
+    def boolean(x), do: x
+    def binary(x), do: x
   end
 
   def subject(_ \\ nil) do
@@ -28,10 +28,10 @@ defmodule Spyanator.Assertions.Returns.Test do
     :ok
   end
 
-  describe "when a function is being tracked" do
+  describe "when a function is being defed" do
     setup [:subject]
 
-    test "it tracks the returned value" do
+    test "it defs the returned value" do
       assert Spy |> returned(3) |> from(:test)
     end
 
@@ -51,23 +51,23 @@ defmodule Spyanator.Assertions.Returns.Test do
   describe "when a function returns a non-number type" do
     setup [:complex_subject]
 
-    test "it tracks arrays" do
+    test "it defs arrays" do
       assert Spy |> returned([1]) |> from(:array)
     end
 
-    test "it tracks tuples" do
+    test "it defs tuples" do
       assert Spy |> returned({1}) |> from(:tuple)
     end
 
-    test "it tracks strings" do
+    test "it defs strings" do
       assert Spy |> returned("1") |> from(:string)
     end
 
-    test "it tracks binaries" do
+    test "it defs binaries" do
       assert Spy |> returned('1') |> from(:binary)
     end
 
-    test "it tracks booleans" do
+    test "it defs booleans" do
       assert Spy |> returned(false) |> from(:boolean)
     end
   end

@@ -1,7 +1,7 @@
 defmodule Spyanator.Assertions.Returns.Chains do
   alias Spyanator.Assertions.Returns
   @moduledoc """
-    functional chains that can be used to inspect what a tracked function
+    functional chains that can be used to inspect what a  function
     returned
   """
 
