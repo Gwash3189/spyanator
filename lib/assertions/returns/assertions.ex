@@ -22,7 +22,7 @@ defmodule Spyanator.Assertions.Returns.Assertions do
       case func_state == nil do
         true -> false
         false ->
-          returned_values_list = func_state #%{returned_values: {...}}
+          func_state #%{returned_values: {...}}
             |> Map.get(:return_values) #{[values...], ....}
             |> Tuple.to_list #[[values], [...]]
             |> List.flatten #[values]

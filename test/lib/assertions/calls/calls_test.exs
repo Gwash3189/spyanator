@@ -57,6 +57,14 @@ defmodule Spyanator.Assertions.Calls.Test do
     end
   end
 
+  describe "asserting that something has not been called at all" do
+    Spyanator.start_spy(Spy)
+
+    assert Spy |> received(:test) |> exactly(0) |> times
+    assert Spy |> received(:test) |> at_least(0) |> times
+    assert Spy |> received(:test) |> at_most(0) |> times
+  end
+
   def subject(_ \\ nil) do
     Spyanator.start_spy(Spy)
     Spy.test(1, 2)

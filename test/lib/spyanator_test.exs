@@ -46,7 +46,7 @@ defmodule Spyanator.Test do
     test "it defs how many times the function is called", %{spy: {:ok, spy}} do
       assert state_for(spy) |> Map.get(:def_me) |> Map.get(:calls) == 1
 
-      subject
+      subject()
 
       assert state_for(spy) |> Map.get(:def_me) |> Map.get(:calls) == 2
     end

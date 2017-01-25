@@ -40,14 +40,14 @@ defmodule Spyanator.Assertions.Calls.Assertions do
     Assertion that ensures a  function was called exactly *n* number
     of times
   """
-  @spec exactly(false, %Calls{}) :: boolean
+  @spec exactly(false, integer) :: boolean
+  def exactly(false, 0), do: true
   def exactly(false, _), do: false
 
   @doc """
     Assertion that ensures a  function was called exactly *n* number
     of times
   """
-  @spec exactly(false, %Calls{}) :: boolean
   def exactly(%Calls{} = calls, count), do:
     calls
       |> Map.put(:expected_call_count, count)
@@ -57,14 +57,15 @@ defmodule Spyanator.Assertions.Calls.Assertions do
     Assertion that ensures a  function was called at least *n* number
     of times
   """
-  @spec at_least(false, %Calls{}) :: boolean
+  @spec at_least(false, any) :: boolean
+  def at_least(false, 0), do: true
   def at_least(false, _), do: false
 
   @doc """
     Assertion that ensures a  function was called at least *n* number
     of times
   """
-  @spec at_least(false, %Calls{}) :: boolean
+  @spec at_least(%Calls{}, integer) :: boolean
   def at_least(%Calls{} = calls, count), do:
     calls
       |> Map.put(:expected_call_count, count)
@@ -75,14 +76,15 @@ defmodule Spyanator.Assertions.Calls.Assertions do
     Assertion that ensures a  function was called at most *n* number
     of times
   """
-  @spec at_least(false, %Calls{}) :: boolean
+  @spec at_least(false, any) :: boolean
+  def at_most(false, 0), do: true
   def at_most(false, _), do: false
 
   @doc """
     Assertion that ensures a  function was called at most *n* number
     of times
   """
-  @spec at_least(false, %Calls{}) :: boolean
+  @spec at_least(%Calls{}, integer) :: boolean
   def at_most(%Calls{} = calls, count), do:
     calls
       |> Map.put(:expected_call_count, count)
