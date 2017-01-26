@@ -5,9 +5,17 @@ defmodule Spyanator.Assertions.Calls.Chains do
   """
   alias Spyanator.Assertions.Calls
 
+  @doc """
+    Used to make an assertion on a single argument that a function received.
+  """
+  @spec with_argument(false, any) :: false
   def with_argument(false, _), do:
     false
 
+  @doc """
+    Used to make an assertion on a single argument that a function received.
+  """
+  @spec with_argument(%Calls{}, any) :: false | %Calls{}
   def with_argument(%Calls{call_count: count, module: module, func_name: func_name} = calls, expected_argument) do
     actual_arguments = Agent.get(Spyanator.get_pid_for_module(module), fn(state) ->
       Map.get(state, func_name) |> Map.get(:arguments)
@@ -20,6 +28,8 @@ defmodule Spyanator.Assertions.Calls.Chains do
     to_return = calls
       |> Map.put(:expected_argument, expected_argument)
       |> Map.put(:actual_arguments, actual_arguments)
+
+    count > 0 && called_with_args_at_least_once? && to_return
   end
 
   @doc """

@@ -5,7 +5,7 @@ defmodule Spyanator.Mixfile do
   """
   def project do
     [app: :spyanator,
-     version: "0.0.3",
+     version: "0.0.4",
      elixir: "~> 1.3",
      name: "Spyanator",
      description: @description,

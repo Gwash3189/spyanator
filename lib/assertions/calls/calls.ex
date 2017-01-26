@@ -49,7 +49,7 @@ defimpl Spyanator.Assertion, for: Spyanator.Assertions.Calls do
     end
   end
 
-  defp handle_expected_arguments(%Calls{expected_argument: expected_argument, expected_arguments: expected_arguments, actual_arguments: actual_arguments, expected_call_count: expected_call_count}) do
+  defp handle_expected_arguments(%Calls{expected_argument: expected_argument, expected_arguments: expected_arguments, actual_arguments: actual_arguments}) do
     case expected_argument do
       nil ->
         case tuple_size(actual_arguments) do

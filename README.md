@@ -14,7 +14,7 @@ We also provide ExUnit helpers for our spys.
 
     ```elixir
     def deps do
-      [{:spyanator, "~> 0.0.3"}]
+      [{:spyanator, "~> 0.0.4"}]
     end
     ```
 
