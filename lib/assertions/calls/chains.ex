@@ -5,11 +5,28 @@ defmodule Spyanator.Assertions.Calls.Chains do
   """
   alias Spyanator.Assertions.Calls
 
+  def with_argument(false, _), do:
+    false
+
+  def with_argument(%Calls{call_count: count, module: module, func_name: func_name} = calls, expected_argument) do
+    actual_arguments = Agent.get(Spyanator.get_pid_for_module(module), fn(state) ->
+      Map.get(state, func_name) |> Map.get(:arguments)
+    end)
+
+    called_with_args_at_least_once? = actual_arguments
+      |> Tuple.to_list
+      |> Enum.any?(&Enum.member?(&1, expected_argument))
+
+    to_return = calls
+      |> Map.put(:expected_argument, expected_argument)
+      |> Map.put(:actual_arguments, actual_arguments)
+  end
+
   @doc """
     Used to make an assertion on the arguments that a  function received
   """
-  @spec with_arguments(false) :: false
-  def with_arguments(false), do: false
+  @spec with_arguments(false, any) :: false
+  def with_arguments(false, _), do: false
 
   @doc """
     Used to make an assertion on the arguments that a  function received
@@ -20,7 +37,7 @@ defmodule Spyanator.Assertions.Calls.Chains do
       Map.get(state, func_name) |> Map.get(:arguments)
     end)
 
-    called_with_args_at_least_once = actual_arguments
+    called_with_args_at_least_once? = actual_arguments
       |> Tuple.to_list
       |> Enum.member?(expected_arguments)
 
@@ -28,7 +45,7 @@ defmodule Spyanator.Assertions.Calls.Chains do
       |> Map.put(:expected_arguments, expected_arguments)
       |> Map.put(:actual_arguments, actual_arguments)
 
-    count > 0 && called_with_args_at_least_once && to_return
+    count > 0 && called_with_args_at_least_once? && to_return
   end
 
   @doc """

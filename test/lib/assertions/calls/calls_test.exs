@@ -42,6 +42,12 @@ defmodule Spyanator.Assertions.Calls.Test do
       refute Spy |> received(:test) |> with_arguments([1, 3])
     end
 
+    test "it can receive a portion of the provided arguments" do
+      Spy.test(5, 6)
+
+      assert Spy |> received(:test) |> with_argument(5) |> at_least(1)
+    end
+
     test "it can be used with with_arguments/2 and twice" do
       refute Spy |> received(:test) |> with_arguments([1, 2]) |> twice
       Spy.test(1, 2)

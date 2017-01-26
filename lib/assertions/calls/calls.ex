@@ -9,6 +9,7 @@ defmodule Spyanator.Assertions.Calls do
     func_name: nil,
     expected_call_count: 0,
     expected_arguments: [],
+    expected_argument: nil,
     actual_arguments: {},
     modifier: :==
   ]
@@ -21,6 +22,7 @@ defimpl Spyanator.Assertion, for: Spyanator.Assertions.Calls do
   def check(%Calls{} = calls) do
     [
       handle_expected_arguments(calls),
+      handle_expected_argument(calls),
       handle_modifiers(calls)
     ] |> Enum.all?
   end
@@ -33,19 +35,32 @@ defimpl Spyanator.Assertion, for: Spyanator.Assertions.Calls do
     end
   end
 
-  defp handle_expected_arguments(%Calls{expected_arguments: expected_arguments, actual_arguments: actual_arguments, expected_call_count: expected_call_count}) do
+  defp handle_expected_argument(%Calls{expected_argument: expected_argument, actual_arguments: actual_arguments}) do
     case tuple_size(actual_arguments) do
       0 -> true
       _ ->
-        called_with_arguments_count = actual_arguments
-          |> Tuple.to_list
-          |> Enum.reduce(0, fn(actual_argument, acc) ->
-            case actual_argument == expected_arguments do
-              true -> acc + 1
-            end
-          end)
-
-        expected_call_count == called_with_arguments_count
+        case expected_argument do
+          nil -> true
+          _ ->
+            actual_arguments
+              |> Tuple.to_list
+              |> Enum.any?(&Enum.member?(&1, expected_argument))
+        end
     end
+  end
+
+  defp handle_expected_arguments(%Calls{expected_argument: expected_argument, expected_arguments: expected_arguments, actual_arguments: actual_arguments, expected_call_count: expected_call_count}) do
+    case expected_argument do
+      nil ->
+        case tuple_size(actual_arguments) do
+          0 -> true
+          _ ->
+            actual_arguments
+              |> Tuple.to_list
+              |> Enum.member?(expected_arguments)
+        end
+      _ -> true
+    end
+
   end
 end
